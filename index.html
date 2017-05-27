@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ag Drum Kit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">aa</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">gy</span>
+    </div>
+    <div data-key="67" class="key">
+      <kbd>C</kbd>
+      <span class="sound">crate</span>
+    </div>
+    <div data-key="79" class="key">
+      <kbd>O</kbd>
+      <span class="sound">salmon</span>
+    </div>
+    <div data-key="80" class="key">
+      <kbd>P</kbd>
+      <span class="sound">peas</span>
+    </div>
+    <div data-key="81" class="key">
+      <kbd>Q</kbd>
+      <span class="sound">quiet</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">sit</span>
+    </div>
+    <div data-key="87" class="key">
+      <kbd>W</kbd>
+      <span class="sound">ball</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">lad</span>
+    </div>
+  </div>
+
+  <audio data-key="65" src="sounds/aa.m4a"></audio>
+  <audio data-key="67" src="sounds/crate.m4a"></audio>
+  <audio data-key="71" src="sounds/gy.m4a"></audio>
+  <audio data-key="79" src="sounds/salmon.m4a"></audio>
+  <audio data-key="80" src="sounds/peas.m4a"></audio>
+  <audio data-key="81" src="sounds/quiet.m4a"></audio>
+  <audio data-key="83" src="sounds/sit.m4a"></audio>
+  <audio data-key="87" src="sounds/wheresyourball.m4a"></audio>
+  <audio data-key="76" src="sounds/goodlad.m4a"></audio>
+<script>
+
+
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    if (!audio) return; 
+    audio.currentTime = 0; 
+    audio.play();
+    key.classList.add('playing');
+  }
+
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') return; 
+    this.classList.remove('playing');
+  }
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener('keydown', playSound);
+
+</script>
+
+</body>
+</html>
